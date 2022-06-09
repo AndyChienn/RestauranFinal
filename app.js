@@ -7,6 +7,8 @@ const methodOverride = require('method-override')
 const routes = require('./routes')
 require('./config/mongoose')
 
+const usePassport = require('./config/passport')
+
 const app = express()
 const port = 3000
 // const { redirect } = require('express/lib/response')突然自己冒出
@@ -25,6 +27,8 @@ app.use(session({
 app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
+
+usePassport(app)
 // 設定路由
 app.use(routes)
 
