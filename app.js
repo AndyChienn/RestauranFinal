@@ -4,6 +4,9 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const routes = require('./routes')
 require('./config/mongoose')
@@ -11,7 +14,7 @@ require('./config/mongoose')
 const usePassport = require('./config/passport')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT
 // const { redirect } = require('express/lib/response')突然自己冒出
 // const urlencoded = require('body-parser/lib/types/urlencoded')突然自己冒出
 const Handlebars = require('handlebars')
@@ -20,7 +23,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(session({
-  secret: 'thisismysecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
